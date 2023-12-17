@@ -1,0 +1,105 @@
+{
+   "characters": [
+   {
+      "name": "Sigvard",
+      "rarity": "common"  ,
+      "rarityPriority": 1,
+      "type": "long"  ,
+      "imgPath": png8,
+      "damage": 7,
+      "hp": 4,
+      "armor": 2,
+      "about": "Бывший мушкетер королевской стражи. Уже много лет живет вдали ото всех. Местные считают, что это дряхлый старик, но в стрельбе ему нет равных...",
+   },
+   {
+      "name": "Tessan",
+      "rarity": "common"  ,
+      "rarityPriority": 1,
+      "type": "melee"  ,
+      "imgPath": png9,
+      "damage": 7,
+      "hp": 4,
+      "armor": 2,
+      "about": "Местный трактирщик. Знает все местные кланы и последние новости. Днем он продает баранину и хмель, а ночью тренируется с мечом на задем дворе...",
+   },
+   {
+      "name": "Ursula",
+      "rarity": "rare"  ,
+      "rarityPriority": 2,
+      "type": "magic"  ,
+      "imgPath": png14,
+      "damage": 7,
+      "hp": 4,
+      "armor": 2,
+      
+      
+      "about": "Ученица королевской академии. Ставит научные эксперименты, а тажке увлекается легкой магией. Ходят слухи, что у неё роман с сыном короля...",
+   },
+   {
+      "name": "Frans",
+      "rarity": "common"  ,
+      "rarityPriority": 1,
+      "type": "long"  ,
+      "imgPath": png15,
+      "damage": 7,
+      "hp": 4,
+      "armor": 2,
+      
+      
+      "about": "Охотник из клана полей. В стрельбе из лука ему нет равных. Ходят слухи, что сам предводитель клана Аксель, ходит с ним на охоту...",
+   },
+]  CharacterType[],
+robbersList: [
+   {
+      "name": "Rasmus"  RobbersNamesType,
+      "rarity": "common"  ,
+      "rarityPriority": 1,
+      "type": "long"  ,
+      "imgPath": robber1,
+      "damage": 2,
+      "hp": 2,
+      "armor": 2,
+      
+      
+      "about": "",
+   },
+   {
+      "name": "Ruben"  RobbersNamesType,
+      "rarity": "common"  ,
+      "rarityPriority": 1,
+      "type": "melee"  ,
+      "imgPath": robber2,
+      "damage": 1,
+      "hp": 2,
+      "armor": 3,
+      
+      
+      "about": "",
+   },
+   {
+      "name": "Ulf"  RobbersNamesType,
+      "rarity": "rare"  ,
+      "rarityPriority": 1,
+      "type": "melee"  ,
+      "imgPath": robber3,
+      "damage": 1,
+      "hp": 4,
+      "armor": 3,
+      
+      
+      "about": "",
+   },
+   {
+      "name": "Folke"  RobbersNamesType,
+      "rarity": "epic"  ,
+      "rarityPriority": 1,
+      "type": "melee"  ,
+      "imgPath": robber4,
+      "damage": 3,
+      "hp": 4,
+      "armor": 3,
+      
+      
+      "about": "",
+   }]
+}
