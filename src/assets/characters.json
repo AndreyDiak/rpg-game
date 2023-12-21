@@ -1,0 +1,178 @@
+{
+	"characters": [
+		{
+			"id": 1,
+			"name": "Эстер",
+			"type": "support",
+			"rarity": "common",
+			"characteristics": {
+				"damage": 1,
+				"hp": 3,
+				"armor": 4
+			},
+			"skill": {
+				"type": "damage_increase",
+				"category": "passive",
+				"count": 0.15,
+				"imgPath": "damage_increase",
+				"about": "+15% урона у юнитов в соседних клетках"
+			},
+			"imgPath": "esther",
+			"about": "Дочь народа полей. Всегда готова помочь своим друзьям. Не смотря на ее юность и красоту, из нее вышел бы хороший помощник на поле боя."
+		},
+		{
+			"id": 2,
+			"name": "Кнуд",
+			"type": "melee",
+			"rarity": "rare",
+			"characteristics": {
+				"damage": 3,
+				"hp": 5,
+				"armor": 6
+			},
+			"imgPath": "knud",
+			"about": "Он с детсва мечтал быть рыцарем, но вместо меча в руках держит лишь вилы. Может быть настанет день когда всё изменится..."
+		},
+		{
+			"id": 3,
+			"name": "Агнета",
+			"type": "magic",
+			"rarity": "epic",
+			"characteristics": {
+				"damage": 7,
+				"hp": 4,
+				"armor": 2
+			},
+			"imgPath": "agneta",
+			"about": "Молодая девушка из дома Рагнара. С детсва изучает магию и проводит эксперименты над крысами."
+		},
+		{
+			"id": 4,
+			"name": "Бьерн",
+			"type": "melee",
+			"rarity": "common",
+			"characteristics": {
+				"damage": 3,
+				"hp": 4,
+				"armor": 5
+			},
+			"imgPath": "bernt",
+			"about": "Рабочий клана полей. Питает слабость к азартным играм и хмельным напиткам."
+		},
+		{
+			"id": 5,
+			"name": "Клавдия",
+			"type": "support",
+			"rarity": "common",
+			"characteristics": {
+				"damage": 2,
+				"hp": 5,
+				"armor": 2
+			},
+			"skill": {
+				"type": "protection_increase",
+				"category": "passive",
+				"count": 0.2,
+				"imgPath": "protection_increase",
+				"about": "+20% к поглащеню урона у юнитов в соседних клетках"
+			},
+			"imgPath": "claudia",
+			"about": "Служанка дома Рагнара. Мечтает о своем хозяйстве и муже с приданным."
+		},
+		{
+			"id": 6,
+			"name": "Шарлотта",
+			"type": "magic",
+			"rarity": "rare",
+			"characteristics": {
+				"damage": 5,
+				"hp": 6,
+				"armor": 3
+			},
+			"imgPath": "charlotte",
+			"about": "Загадочная путница из клана ведьм. Способна убить одним взглядом. Всегда берет что хочет. Корона назначала за нее награду..."
+		},
+		{
+			"id": 7,
+			"name": "Олуф",
+			"type": "melee",
+			"rarity": "rare",
+			"characteristics": {
+				"damage": 7,
+				"hp": 4,
+				"armor": 2
+			},
+			"imgPath": "oluf",
+			"about": "Младший сын Рагнара. С детсва обучается владению оружием. Внешне выглядит безобидно, но это не так."
+		},
+		{
+			"id": 8,
+			"name": "Тильда",
+			"type": "long",
+			"rarity": "rare",
+			"characteristics": {
+				"damage": 7,
+				"hp": 4,
+				"armor": 2
+			},
+			"imgPath": "tilda",
+			"about": "Член королевской семьи. Обожает пиры а прогулки на лошодях, но мало кто знает, что самым сильным её увлеченем это стрельба из арбалета..."
+		},
+		{
+			"id": 9,
+			"name": "Виктория",
+			"type": "support",
+			"rarity": "epic",
+			"characteristics": {
+				"damage": 7,
+				"hp": 4,
+				"armor": 2
+			},
+			"skill": {
+				"type": "hp_recovery",
+				"category": "active",
+				"count": 0.25,
+				"imgPath": "hp_recovery",
+				"about": "25% восстановления брони или здоровья в соседних клетках при появлении на поле"
+			},
+			"imgPath": "victoria",
+			"about": "Одна из дочерей Рагнара. О ней мало что известно, ведь на людях она появляется крайне редко. Может кто и знает, чем она там занимается?"
+		},
+		{
+			"id": 10,
+			"name": "Виктор",
+			"type": "spy",
+			"rarity": "epic",
+			"skill": {
+				"type": "hp_damage",
+				"category": "active",
+				"count": 0.25,
+				"imgPath": "hp_damage",
+				"about": "Моментально снимает 25% от брони или здоровья в соседних клетках при появлении на поле"
+			},
+			"damage": 7,
+			"hp": 4,
+			"armor": 2,
+			"imgPath": "victor",
+			"about": "Королевский посол. Знает о всем, что происходит на западном побережье от дома Рагнара до ведьменных болот."
+		},
+		{
+			"id": 11,
+			"name": "Varg",
+			"type": "spy",
+			"rarity": "epic",
+			"imgPath": "varg",
+			"skill": {
+				"type": "taken_damage_increase",
+				"category": "passive",
+				"count": 0.2,
+				"imgPath": "taken_damage_increase",
+				"about": "+20% к получаемому урону в соседних клетках пока находится на столе"
+			},
+			"damage": 7,
+			"hp": 4,
+			"armor": 2,
+			"about": "Один из проффесоров академии 'золотых времен'. Знает всю темную историю королевства, правда кто поверит дряхлому старику?"
+		}
+	]
+}
