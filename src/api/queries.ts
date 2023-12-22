@@ -1,18 +1,18 @@
-import { graphql } from "../gql";
+import { gql } from '@apollo/client';
 
-export const getUsers = graphql(`
-   query AllTodos($cursor: Cursor) {
-      todosCollection(first: 10, after: $cursor) {
-         edges {
-            node {
-               nodeId
-               title
-            }
-         }
-         pageInfo {
-            endCursor
-            hasNextPage
-         }
-      }
-   }
-`);
+export const getUsers = gql`
+	query AllTodos($cursor: Cursor) {
+		todosCollection(first: 10, after: $cursor) {
+			edges {
+				node {
+					nodeId
+					title
+				}
+			}
+			pageInfo {
+				endCursor
+				hasNextPage
+			}
+		}
+	}
+`;
