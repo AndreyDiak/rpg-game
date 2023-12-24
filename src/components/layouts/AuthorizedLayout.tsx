@@ -1,35 +1,33 @@
-import { Session } from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Session, User } from '@supabase/supabase-js';
+import { Fragment, createContext, useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase/client';
-import { AuthForm } from '../forms/AuthForm';
+import { AuthContextData } from '../../typings/auth';
 import { Header } from '../header/Header';
 
+export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+
 export const AuthorizedLayout = () => {
-	const [session, setSession] = useState<null | Session>(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		supabase.auth.getSession().then(({ data: { session } }) => {
-			setSession(session);
-		});
-
-		const {
-			data: { subscription },
-		} = supabase.auth.onAuthStateChange((_event, session) => {
-			setSession(session);
-		});
-
-		return () => subscription.unsubscribe();
-	}, []);
-
-	if (!session) {
-		return <AuthForm />;
-	}
+		supabase.auth
+			.getSession()
+			.then(({ data: { session } }) => {
+				if (!session) {
+					window.location.reload();
+					navigate('/auth');
+				}
+			})
+			.catch(() => {
+				navigate('/auth');
+			});
+	}, [navigate]);
 
 	return (
-		<div>
+		<Fragment>
 			<Header />
 			<Outlet />
-		</div>
+		</Fragment>
 	);
 };

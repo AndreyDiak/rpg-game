@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../../supabase/client';
+import { useAuth } from '../../hooks/useAuth';
 
 type Link = {
 	title: string;
@@ -23,9 +23,7 @@ const LINKS: Link[] = [
 ];
 
 export const Header = memo(() => {
-	const onSignOutHandler = () => {
-		supabase.auth.signOut();
-	};
+	const { signOut } = useAuth();
 
 	return (
 		<div>
@@ -34,7 +32,7 @@ export const Header = memo(() => {
 					{title}
 				</Link>
 			))}
-			<button onClick={onSignOutHandler}>Выйти</button>
+			<button onClick={signOut}>Выйти</button>
 		</div>
 	);
 });

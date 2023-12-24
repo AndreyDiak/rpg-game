@@ -25,6 +25,7 @@ interface FormFieldProps
 		UseFormRegisterReturn {
 	placeholder?: string;
 	type?: InputHTMLAttributes<HTMLInputElement>['type'];
+	defaultClassName?: string;
 	children?: ReactElement<ChildrenProps & { ref?: Ref<any> }>;
 	description?: ReactNode;
 	title?: string;
@@ -42,6 +43,7 @@ export const FormField = forwardRef<any, FormFieldProps>(
 			id,
 			placeholder,
 			pattern,
+			defaultClassName,
 			type = 'text',
 			...rest
 		},
@@ -67,7 +69,7 @@ export const FormField = forwardRef<any, FormFieldProps>(
 		};
 		return (
 			<div {...rest}>
-				{title && <div>{title}</div>}
+				{title && <div className="font-semibold mb-1">{title}</div>}
 				{children ? (
 					cloneElement(children, { ...childrenProps, ref })
 				) : (
@@ -76,12 +78,13 @@ export const FormField = forwardRef<any, FormFieldProps>(
 						id={name}
 						pattern={pattern}
 						placeholder={placeholder}
+						className={defaultClassName}
 						ref={ref}
 						{...(childrenProps as any)}
 					/>
 				)}
 				{description && <div>{description}</div>}
-				{error && <span>{error.message}</span>}
+				{error && <div className="text-red-400">{error.message}</div>}
 			</div>
 		);
 	},
