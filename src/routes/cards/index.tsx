@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { supabase } from '../../supabase/client';
+
 export const CardsRoute = () => {
 	// const onClickHandler = async () => {
 	// 	await supabase.from('users').insert({
@@ -6,21 +9,13 @@ export const CardsRoute = () => {
 	// 	});
 	// };
 
-	// useEffect(() => {
-	// 	const channel = supabase.channel('fetch_all_users');
-	// 	channel
-	// 		.on('postgres_changes', { event: '*', schema: 'public' }, () => {
-	// 			console.log('Изменение в БД!!!');
-	// 		})
-	// 		.subscribe((status) => {
-	// 			if (status === 'SUBSCRIBED') {
-	// 				console.log('Client subscribed to channel');
-	// 			}
-	// 		});
-	// 	return () => {
-	// 		channel.unsubscribe;
-	// 	};
-	// }, []);
+	useEffect(() => {
+		const load = async () => {
+			const { data } = await supabase.from('characters').select();
+			console.log({ data });
+		};
+		load();
+	}, []);
 
 	return <div> </div>;
 };
