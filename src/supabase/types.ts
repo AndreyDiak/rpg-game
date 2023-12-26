@@ -76,6 +76,7 @@ export interface Database {
       }
       users: {
         Row: {
+          cards_ids: number[] | null
           created_at: string
           email: string | null
           id: number
@@ -84,6 +85,7 @@ export interface Database {
           updated_at: string | null
         }
         Insert: {
+          cards_ids?: number[] | null
           created_at?: string
           email?: string | null
           id?: number
@@ -92,6 +94,7 @@ export interface Database {
           updated_at?: string | null
         }
         Update: {
+          cards_ids?: number[] | null
           created_at?: string
           email?: string | null
           id?: number

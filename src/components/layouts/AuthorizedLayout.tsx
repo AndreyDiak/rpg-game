@@ -1,5 +1,4 @@
-import { Session, User } from '@supabase/supabase-js';
-import { Fragment, createContext, useEffect, useState } from 'react';
+import { Fragment, createContext, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase/client';
 import { AuthContextData } from '../../typings/auth';

@@ -7,7 +7,8 @@
 
 	--color-bg-main: rgba(252, 252, 252);
 	--color-bg-gold: #a78656;
-	--color-bg-gold-lighten: #d7ccba;
+	--color-bg-gold-lighten: #cfc1ac;
+	/* --color-bg-gold-lighten: #d7ccba; */
 	--color-bg-gold-darken: #7b6340;
 
 	background-color: var(--color-bg-main);
