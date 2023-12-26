@@ -1,12 +1,17 @@
-export interface Options<T extends object> {
+import { ConstructSelectedType } from './cardService';
+
+export interface Options<T> {
 	select?: (keyof T)[];
 }
 
-export abstract class ServiceInstance<Entity> {
-	abstract getById<DBEntity extends object>(
+export abstract class ServiceInstance<
+	Entity extends object,
+	DBEntity extends object,
+> {
+	abstract getById<T extends Options<DBEntity>>(
 		id: number,
-		options?: Options<DBEntity>,
-	): Promise<Partial<Entity> | null>;
+		options?: T,
+	): Promise<ConstructSelectedType<DBEntity, T['select']> | null>;
 	// TODO подумать как это моно реализовать
 	// abstract getWithFilter(): any;
 

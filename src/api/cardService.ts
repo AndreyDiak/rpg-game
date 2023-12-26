@@ -2,7 +2,7 @@ import { supabase } from '../supabase/client';
 import { Card, DBCard } from '../typings/card';
 import { Options, ServiceInstance } from './serviceInstance';
 
-class CardService extends ServiceInstance<Card> {
+class CardService extends ServiceInstance<Card, DBCard> {
 	async getById<T extends Options<DBCard>>(
 		id: number,
 		options?: T,
@@ -19,7 +19,7 @@ class CardService extends ServiceInstance<Card> {
 	}
 }
 
-type ConstructSelectedType<
+export type ConstructSelectedType<
 	T extends object,
 	U extends readonly (keyof T)[] | undefined,
 > = U extends undefined ? T : U extends unknown[] ? Pick<T, U[number]> : T;
