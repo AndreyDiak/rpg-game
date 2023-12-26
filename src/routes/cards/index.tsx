@@ -1,4 +1,5 @@
-import { useCards } from '../../hooks/cards/useCards';
+import { useEffect } from 'react';
+import cardService from '../../api/cardService';
 
 export const CardsRoute = () => {
 	// const onClickHandler = async () => {
@@ -8,15 +9,18 @@ export const CardsRoute = () => {
 	// 	});
 	// };
 
-	// useEffect(() => {
-	// 	const load = async () => {
-	// 		const { data } = await supabase.from('characters').select();
-	// 		console.log({ data });
-	// 	};
-	// 	load();
-	// }, []);
+	const load = async () => {
+		const data = await cardService.getById(1, {
+			select: ['id', 'level', 'character_id'],
+		});
+		console.log({ data });
+	};
 
-	useCards();
+	useEffect(() => {
+		load();
+	}, []);
+
+	// useCards();
 
 	return <div>{/* типо рендрим карты пользователя... */}</div>;
 };
