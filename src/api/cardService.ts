@@ -1,8 +1,8 @@
 import { supabase } from '../supabase/client';
 import { Card, DBCard } from '../typings/card';
-import { Options, ServiceInstance } from './serviceInstance';
+import { Options, Service } from './service';
 
-class CardService extends ServiceInstance<Card, DBCard> {
+class CardService extends Service<Card, DBCard> {
 	async getById<T extends Options<DBCard>>(
 		id: number,
 		options?: T,
@@ -24,9 +24,7 @@ export type ConstructSelectedType<
 	U extends readonly (keyof T)[] | undefined,
 > = U extends undefined ? T : U extends unknown[] ? Pick<T, U[number]> : T;
 
-function convertSelect<T extends object>(
-	select: (keyof T)[] | undefined,
-): string {
+function convertSelect<T extends object>(select: (keyof T)[] | undefined): string {
 	if (!select || select.length === 0) {
 		return '*';
 	}

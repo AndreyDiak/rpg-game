@@ -13,6 +13,7 @@ export const CardsRoute = () => {
 		const data = await cardService.getById(1, {
 			select: ['id', 'level', 'character_id'],
 		});
+
 		console.log({ data });
 	};
 
