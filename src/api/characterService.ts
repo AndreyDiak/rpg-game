@@ -1,39 +1,38 @@
 import { supabase } from '../supabase/client';
-import { Card, DBCard } from '../typings/card';
+import { Character, DBCharacter } from '../typings/character';
 import { PickSelected } from '../typings/utils';
 import { convertToSelect } from '../utils/api/convertToSelect';
 import { Options, Service } from './service';
 
-class CardService extends Service<Card, DBCard> {
+class CharacterService extends Service<Character, DBCharacter> {
 	async getById<
-		E extends DBCard,
+		E extends DBCharacter,
 		O extends Options<E>,
 		R extends PickSelected<E, O['select']>,
 	>(id: number, options?: O): Promise<R | null> {
 		const select = options?.select;
 
 		return supabase
-			.from('cards')
+			.from('characters')
 			.select(convertToSelect(select))
 			.eq('id', id)
 			.maybeSingle<R>()
 			.then((res) => res.data);
-		// .then((data) => CardConverter.convertFromApi(data));
 	}
 
-	async getListByOwnerId<
-		E extends DBCard,
+	async getList<
+		E extends DBCharacter,
 		O extends Options<E>,
 		R extends PickSelected<E, O['select']>,
-	>(ownerId: number, options?: O): Promise<R[]> {
+	>(ids: number[], options?: O): Promise<R[]> {
 		const select = options?.select;
 		return supabase
-			.from('cards')
+			.from('characters')
 			.select(convertToSelect(select))
-			.eq('owner_id', ownerId)
+			.in('id', ids)
 			.returns<R[]>()
 			.then((res) => res.data ?? []);
 	}
 }
 
-export default new CardService();
+export default new CharacterService();

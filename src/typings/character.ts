@@ -1,3 +1,7 @@
+import { Database } from '../supabase/types';
+
+export type DBCharacter = Database['public']['Tables']['characters']['Row'];
+
 export interface Character {
 	name: string;
 	type: CharacterType;

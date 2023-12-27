@@ -1,4 +1,10 @@
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
+export type Json =
+	| string
+	| number
+	| boolean
+	| null
+	| { [key: string]: Json | undefined }
+	| Json[];
 
 export interface Database {
 	public: {
@@ -10,6 +16,7 @@ export interface Database {
 					created_at: string;
 					id: number;
 					level: number | null;
+					owner_id: number | null;
 					prestige: number | null;
 				};
 				Insert: {
@@ -18,6 +25,7 @@ export interface Database {
 					created_at?: string;
 					id?: number;
 					level?: number | null;
+					owner_id?: number | null;
 					prestige?: number | null;
 				};
 				Update: {
@@ -26,6 +34,7 @@ export interface Database {
 					created_at?: string;
 					id?: number;
 					level?: number | null;
+					owner_id?: number | null;
 					prestige?: number | null;
 				};
 				Relationships: [
@@ -34,6 +43,13 @@ export interface Database {
 						columns: ['character_id'];
 						isOneToOne: false;
 						referencedRelation: 'characters';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'cards_owner_id_fkey';
+						columns: ['owner_id'];
+						isOneToOne: false;
+						referencedRelation: 'users';
 						referencedColumns: ['id'];
 					},
 				];
@@ -143,7 +159,9 @@ export type Tables<
 	: never;
 
 export type TablesInsert<
-	PublicTableNameOrOptions extends keyof Database['public']['Tables'] | { schema: keyof Database },
+	PublicTableNameOrOptions extends
+		| keyof Database['public']['Tables']
+		| { schema: keyof Database },
 	TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
 		? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
 		: never = never,
@@ -162,7 +180,9 @@ export type TablesInsert<
 	: never;
 
 export type TablesUpdate<
-	PublicTableNameOrOptions extends keyof Database['public']['Tables'] | { schema: keyof Database },
+	PublicTableNameOrOptions extends
+		| keyof Database['public']['Tables']
+		| { schema: keyof Database },
 	TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
 		? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
 		: never = never,
@@ -181,7 +201,9 @@ export type TablesUpdate<
 	: never;
 
 export type Enums<
-	PublicEnumNameOrOptions extends keyof Database['public']['Enums'] | { schema: keyof Database },
+	PublicEnumNameOrOptions extends
+		| keyof Database['public']['Enums']
+		| { schema: keyof Database },
 	EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
 		? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
 		: never = never,
