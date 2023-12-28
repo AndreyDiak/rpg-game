@@ -3,12 +3,8 @@ import userService from '../../api/userService';
 
 export const CardsRoute = () => {
 	const load = async () => {
-		const data = await userService.getMyCards({
-			// select: ['id', 'character_id', 'level'],
-		});
-		// const user = await userService.me();
-		// console.log({ user });
-		console.log({ data });
+		const user = await userService.me();
+		console.log({ user });
 	};
 
 	useEffect(() => {

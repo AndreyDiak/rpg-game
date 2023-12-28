@@ -1,8 +1,9 @@
 import { supabase } from '../supabase/client';
-import { DBCard } from '../typings/card';
 import { DBUser, User } from '../typings/user';
 import { PickSelected } from '../typings/utils';
 import { convertToSelect } from '../utils/api/convertToSelect';
+import { groupBy } from '../utils/groupBy';
+import authService from './authService';
 import cardService from './cardService';
 import characterService from './characterService';
 import { Options, Service } from './service';
@@ -10,11 +11,10 @@ import { Options, Service } from './service';
 // TODO при me() запросе, возвращаем полную дату...
 
 class UserService extends Service<User, DBUser> {
-	async getById<
-		E extends DBUser,
-		T extends Options<E>,
-		R extends PickSelected<E, T['select']>,
-	>(id: number, options?: T): Promise<R | null> {
+	async getById<E extends DBUser, T extends Options<E>, R extends PickSelected<E, T['select']>>(
+		id: number,
+		options?: T,
+	): Promise<R | null> {
 		const select = options?.select;
 
 		return supabase
@@ -25,49 +25,47 @@ class UserService extends Service<User, DBUser> {
 			.then((res) => res.data);
 	}
 
-	async me(): Promise<DBUser | null> {
-		return supabase.auth
-			.getUser()
-			.then((res) => res.data)
-			.then(({ user }) => {
-				if (user === null) {
-					return null;
-				}
-				const { email } = user;
+	async me(): Promise<any | null> {
+		return authService.me().then(async (data) => {
+			if (data === null) {
+				return null;
+			}
+			const { email } = data;
 
-				if (!email) {
-					return null;
-				}
+			if (!email) {
+				return null;
+			}
 
-				return supabase
-					.from('users')
-					.select('*')
-					.eq('email', email)
-					.maybeSingle<DBUser>()
-					.then((res) => res.data);
+			const user = await supabase
+				.from('users')
+				.select('*')
+				.eq('email', email)
+				.maybeSingle<DBUser>()
+				.then((res) => res.data);
+
+			if (!user) {
+				return null;
+			}
+
+			const cards = await cardService.getListByOwnerId(user.id);
+			const charactersId = cards.map((card) => card.character_id);
+			const characters = await characterService.getList(charactersId);
+			const grouped = groupBy(characters, (v) => v.id);
+
+			const patchedCards = cards.map((card) => {
+				const { character_id, ...rest } = card;
+				return {
+					character: grouped[character_id][0],
+					...rest,
+				};
 			});
-	}
 
-	async getMyCards<
-		O extends Options<DBCard>,
-		R extends PickSelected<DBCard, O['select']>,
-	>(options?: O): Promise<any[]> {
-		const me = await this.me();
-		if (me === null) {
-			return [];
-		}
-		return Promise.all(
-			(await cardService.getListByOwnerId(me.id, options)).map(
-				async (card) => {
-					const { character_id, ...rest } = card;
-					const character = await characterService.getById(character_id!);
-					return {
-						...rest,
-						character,
-					};
-				},
-			),
-		);
+			const { cards_ids, ...rest } = user;
+			return {
+				...rest,
+				cards: patchedCards,
+			};
+		});
 	}
 }
 
