@@ -1,8 +1,9 @@
 import { useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import authService from '../api/authService';
 import { supabase } from '../supabase/client';
 import { SignInData, SignUpData } from '../typings/auth';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 
 type ProviderType = 'google';
 
@@ -23,7 +24,7 @@ export function useAuth(): UseAuth {
 	const navigate = useNavigate();
 
 	const signUp = useCallback(async (userData: SignUpData, onSuccess?: () => void) => {
-		const { email, password, username, repeatPassword } = userData;
+		const { email, password, repeatPassword } = userData;
 		if (password !== repeatPassword) {
 			return;
 		}
@@ -37,62 +38,31 @@ export function useAuth(): UseAuth {
 			return;
 		}
 
-		await supabase.auth
-			.signUp({
-				email,
-				password,
-			})
-			.then(async (res) => {
-				// TODO если мы хотим зарегистрировать нового пользователя
-				// с почтой, которая уже существует, то тут должна прилетать ошибка
-				// но она не прилетает, поэтому приходится в ручную делать проверку сверху...
-				if (res.error) {
-					toast.warning(res.error.message);
-					return;
-				}
-
-				await supabase
-					.from('users')
-					.insert({
-						name: username,
-						email,
-					})
-					.then((res) => {
-						if (res.error) {
-							toast.warning(res.error.message);
-							return;
-						}
-						toast.success('Вы успешно зарегистрированы');
-						onSuccess?.();
-					});
-			})
-			.catch((err) => {
-				toast.warning((err as Error).message);
-			});
+		await authService.signUp(userData).then((res) => {
+			if (!res) {
+				toast.warning('Неизвестная ошибка');
+				return;
+			}
+			if (res.error) {
+				toast.warning(res.error.message);
+				return;
+			}
+			toast.success('Вы успешно зарегистрированы');
+			onSuccess?.();
+		});
 	}, []);
 
 	const signIn = useCallback(
 		async (userData: SignInData, onSuccess?: () => void) => {
-			const { email, password } = userData;
-
-			await supabase.auth
-				.signInWithPassword({
-					email,
-					password,
-				})
-				.then((res) => {
-					if (res.error) {
-						toast.warning(res.error.message);
-						return;
-					}
-
-					onSuccess?.();
-					navigate('/');
-					toast.success('Добро пожаловать!');
-				})
-				.catch((err) => {
-					toast.warning((err as Error).message);
-				});
+			await authService.signIn(userData).then((res) => {
+				if (res.error) {
+					toast.warning(res.error.message);
+					return;
+				}
+				onSuccess?.();
+				navigate('/');
+				toast.success('Добро пожаловать!');
+			});
 		},
 		[navigate],
 	);
