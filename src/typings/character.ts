@@ -29,7 +29,8 @@ export interface Character {
 	rarity: Rarity;
 	characteristics: Characteristics;
 	skill: Skill | null;
-	imgPath: string;
+	imgPathWithBg: string;
+	imgPathWithoutBg: string;
 	about: string;
 }
 /**

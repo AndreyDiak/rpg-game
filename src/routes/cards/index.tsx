@@ -9,8 +9,8 @@ export const CardsRoute = () => {
 	}
 
 	return (
-		<div>
-			<div>
+		<div className='flex w-full h-screen items-center justify-center'>
+			<div className='flex gap-4 max-w-4xl'>
 				{cards.map((card) => (
 					<CharacterCard key={card.id} card={card} />
 				))}
