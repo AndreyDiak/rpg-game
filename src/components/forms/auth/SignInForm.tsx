@@ -24,13 +24,13 @@ export const SignInForm = () => {
 	};
 
 	return (
-		<Form form={form} onSubmit={onSubmit} className="flex flex-col gap-4">
+		<Form form={form} onSubmit={onSubmit} className='flex flex-col gap-4'>
 			<FormField
 				{...register('email', {
 					validate: (v) => validateEmail(v),
 				})}
-				title="Эл. Почта"
-				defaultClassName="authInput"
+				title='Эл. Почта'
+				defaultClassName='authInput'
 				required
 			/>
 			<FormField
@@ -41,9 +41,9 @@ export const SignInForm = () => {
 						}),
 					required: true,
 				})}
-				title="Пароль"
-				type="password"
-				defaultClassName="authInput"
+				title='Пароль'
+				type='password'
+				defaultClassName='authInput'
 				required
 			/>
 			<AuthButton>Авторизация</AuthButton>

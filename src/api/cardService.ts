@@ -1,38 +1,36 @@
 import { supabase } from '../supabase/client';
-import { Card, DBCard } from '../typings/card';
-import { PickSelected } from '../typings/utils';
-import { convertToSelect } from '../utils/api/convertToSelect';
-import { Options, Service } from './service';
+import { DBCard, PCard } from '../typings/card';
+import characterService from './characterService';
+import { Service } from './service';
 
-class CardService extends Service<Card, DBCard> {
-	async getById<
-		E extends DBCard,
-		O extends Options<E>,
-		R extends PickSelected<E, O['select']>,
-	>(id: number, options?: O): Promise<R | null> {
-		const select = options?.select;
-
+class CardService<E extends PCard, D extends DBCard> extends Service<E> {
+	async getByID(id: number) {
 		return supabase
 			.from('cards')
-			.select(convertToSelect(select))
+			.select()
 			.eq('id', id)
-			.maybeSingle<R>()
-			.then((res) => res.data);
-		// .then((data) => CardConverter.convertFromApi(data));
+			.maybeSingle<D>()
+			.then(({ data }) => (data ? this.patch(data) : null));
 	}
 
-	async getListByOwnerId<
-		E extends DBCard,
-		O extends Options<E>,
-		R extends PickSelected<E, O['select']>,
-	>(ownerId: number, options?: O): Promise<R[]> {
-		const select = options?.select;
+	async getByIDs(ids: number[]) {
 		return supabase
 			.from('cards')
-			.select(convertToSelect(select))
-			.eq('owner_id', ownerId)
-			.returns<R[]>()
-			.then((res) => res.data ?? []);
+			.select()
+			.in('id', ids)
+			.returns<D[]>()
+			.then(async ({ data }) => Promise.all<E>(data?.map(this.patch) ?? []));
+	}
+
+	async patch(data: D): Promise<E> {
+		const { character_id, ...rest } = data;
+		return characterService.getByID(character_id).then(
+			(character) =>
+				({
+					...rest,
+					character,
+				} as unknown as E),
+		);
 	}
 }
 

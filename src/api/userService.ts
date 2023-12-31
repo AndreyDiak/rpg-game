@@ -1,31 +1,44 @@
 import { supabase } from '../supabase/client';
-import { DBUser, User } from '../typings/user';
-import { PickSelected } from '../typings/utils';
-import { convertToSelect } from '../utils/api/convertToSelect';
-import { groupBy } from '../utils/groupBy';
+import { DBCard } from '../typings/card';
+import { DBCharacter } from '../typings/character';
+import { DBUser, UserCard } from '../typings/user';
+import { groupBy } from '../utils/functions/groupBy';
 import authService from './authService';
 import cardService from './cardService';
 import characterService from './characterService';
-import { Options, Service } from './service';
+import { Service } from './service';
 
-// TODO при me() запросе, возвращаем полную дату...
+type MeUser = Omit<DBUser, 'cards_ids'> & { cards: UserCard[] };
 
-class UserService extends Service<User, DBUser> {
-	async getById<E extends DBUser, T extends Options<E>, R extends PickSelected<E, T['select']>>(
-		id: number,
-		options?: T,
-	): Promise<R | null> {
-		const select = options?.select;
-
+class UserService<E extends DBUser> extends Service<E> {
+	async getByID(id: number) {
 		return supabase
 			.from('users')
-			.select(convertToSelect(select))
+			.select()
 			.eq('id', id)
-			.maybeSingle<R>()
+			.maybeSingle<E>()
 			.then((res) => res.data);
 	}
 
-	async me(): Promise<any | null> {
+	async getByEmail(email: string) {
+		return supabase
+			.from('users')
+			.select()
+			.eq('email', email)
+			.maybeSingle<E>()
+			.then((res) => res.data);
+	}
+
+	async getByIDs(ids: number[]) {
+		return supabase
+			.from('users')
+			.select()
+			.in('id', ids)
+			.maybeSingle<E[]>()
+			.then((res) => res.data ?? []);
+	}
+
+	async me(): Promise<MeUser | null> {
 		return authService.me().then(async (data) => {
 			if (data === null) {
 				return null;
@@ -36,23 +49,21 @@ class UserService extends Service<User, DBUser> {
 				return null;
 			}
 
-			const user = await supabase
-				.from('users')
-				.select('*')
-				.eq('email', email)
-				.maybeSingle<DBUser>()
-				.then((res) => res.data);
+			const user = await this.getByEmail(email);
 
 			if (!user) {
 				return null;
 			}
 
-			const cards = await cardService.getListByOwnerId(user.id);
-			const charactersId = cards.map((card) => card.character_id);
-			const characters = await characterService.getList(charactersId);
+			const user_cards: DBCard[] = await cardService.getByIDs(
+				user.cards_ids,
+			);
+			const characters: DBCharacter[] = await characterService.getByIDs(
+				user_cards.map((card) => card.character_id),
+			);
 			const grouped = groupBy(characters, (v) => v.id);
 
-			const patchedCards = cards.map((card) => {
+			const patchedCards = user_cards.map((card) => {
 				const { character_id, ...rest } = card;
 				return {
 					character: grouped[character_id][0],
@@ -60,6 +71,7 @@ class UserService extends Service<User, DBUser> {
 				};
 			});
 
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { cards_ids, ...rest } = user;
 			return {
 				...rest,

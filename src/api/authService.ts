@@ -22,9 +22,10 @@ class AuthService {
 			if (res.error) {
 				return res;
 			}
+
 			return supabase
 				.from('users')
-				.insert({ name: username, email })
+				.insert({ name: username, email, cards_ids: [] })
 				.returns<PostgrestSingleResponse<DBUser>>()
 				.then((res) => res.data);
 		});

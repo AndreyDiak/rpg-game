@@ -1,4 +1,7 @@
-export function groupBy<T extends object>(list: T[], keyGenerator: (item: T) => string | number) {
+export function groupBy<T extends Readonly<object>>(
+	list: T[],
+	keyGenerator: (item: T) => string | number,
+) {
 	const map: Record<string, T[]> = {};
 
 	list.forEach((item) => {

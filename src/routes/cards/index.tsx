@@ -1,17 +1,20 @@
-import { useEffect } from 'react';
-import userService from '../../api/userService';
+import { CharacterCard } from '../../components/card/Character';
+import { useCards } from '../../hooks/card/useCards';
 
 export const CardsRoute = () => {
-	const load = async () => {
-		const user = await userService.me();
-		console.log({ user });
-	};
+	const { data: cards, loading } = useCards();
 
-	useEffect(() => {
-		load();
-	}, []);
+	if (loading) {
+		return 'loading...';
+	}
 
-	// useCards();
-
-	return <div>{/* типо рендрим карты пользователя... */}</div>;
+	return (
+		<div>
+			<div>
+				{cards.map((card) => (
+					<CharacterCard key={card.id} card={card} />
+				))}
+			</div>
+		</div>
+	);
 };

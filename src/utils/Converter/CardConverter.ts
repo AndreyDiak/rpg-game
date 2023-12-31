@@ -1,22 +1,15 @@
-import { Card, DBCard } from '../../typings/card';
-
-const DEFAULT_LEVEL = 1;
-const DEFAULT_COUNT = 1;
-const DEFAULT_PRESTIGE = 0;
+import { Card, PCard } from '../../typings/card';
+import { CharacterConverter } from './CharacterConverter';
 
 export class CardConverter {
-	static convertFromApi(data: Partial<DBCard> | null): Partial<Card> | null {
-		if (!data) {
-			return null;
-		}
-		const { character_id, created_at, id, level, prestige, count } = data;
+	static convertFromApi(data: PCard): Card {
+		const { id, created_at, owner_id, character, ...rest } = data;
 		return {
 			id,
-			level: level || level === null ? DEFAULT_LEVEL : undefined,
-			prestige: prestige || prestige === null ? DEFAULT_PRESTIGE : undefined,
-			count: count ?? DEFAULT_COUNT,
-			characterId: character_id!,
 			createdAt: new Date(created_at ?? ''),
+			ownerID: owner_id,
+			character: CharacterConverter.convertFromApi(character),
+			...rest,
 		};
 	}
 }

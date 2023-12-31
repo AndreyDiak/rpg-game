@@ -1,36 +1,23 @@
 import { supabase } from '../supabase/client';
-import { Character, DBCharacter } from '../typings/character';
-import { PickSelected } from '../typings/utils';
-import { convertToSelect } from '../utils/api/convertToSelect';
-import { Options, Service } from './service';
+import { DBCharacter } from '../typings/character';
+import { Service } from './service';
 
-class CharacterService extends Service<Character, DBCharacter> {
-	async getById<
-		E extends DBCharacter,
-		O extends Options<E>,
-		R extends PickSelected<E, O['select']>,
-	>(id: number, options?: O): Promise<R | null> {
-		const select = options?.select;
-
+class CharacterService<E extends DBCharacter> extends Service<E> {
+	async getByID(id: number) {
 		return supabase
 			.from('characters')
-			.select(convertToSelect(select))
+			.select()
 			.eq('id', id)
-			.maybeSingle<R>()
+			.maybeSingle<E>()
 			.then((res) => res.data);
 	}
 
-	async getList<
-		E extends DBCharacter,
-		O extends Options<E>,
-		R extends PickSelected<E, O['select']>,
-	>(ids: number[], options?: O): Promise<R[]> {
-		const select = options?.select;
+	async getByIDs(ids: number[]) {
 		return supabase
 			.from('characters')
-			.select(convertToSelect(select))
+			.select()
 			.in('id', ids)
-			.returns<R[]>()
+			.returns<E[]>()
 			.then((res) => res.data ?? []);
 	}
 }
