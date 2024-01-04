@@ -22,26 +22,47 @@ export function useCards() {
 	const { user } = useAuth();
 
 	const [loading, setLoading] = useState(false);
+	const [cardIDs, setCardIDs] = useState<number[]>([]);
 
-	const loadCards = useCallback(async () => {
-		setLoading(true);
+	const loadCardIDs = useCallback(async () => {
 		if (!user) {
 			return;
 		}
+		userService.getByID(user.id).then((data) => {
+			if (data?.cards_ids) {
+				setCardIDs(data?.cards_ids);
+			}
+		});
+	}, [user]);
+
+	const loadCards = useCallback(async () => {
+		if (!user) {
+			return;
+		}
+		setLoading(true);
 		const cardsIDs = await userService
 			.getByID(user.id)
 			.then((data) => data?.cards_ids ?? []);
 		const cards = await cardService.getByIDs(cardsIDs);
-		dispatch(setCards({ cards }));
 		setLoading(false);
+		dispatch(setCards({ cards }));
 	}, [dispatch, user]);
 
 	useEffect(() => {
-		if (!isEmpty(rawCards)) {
+		loadCardIDs();
+	}, [loadCardIDs]);
+
+	useEffect(() => {
+		// TODO заменить на проверку того, сколько карточке отрендрено, и сколько их есть у игрока
+
+		if (
+			!isEmpty(rawCards) &&
+			Object.keys(rawCards).length === cardIDs.length
+		) {
 			return;
 		}
 		loadCards();
-	}, [loadCards, rawCards]);
+	}, [cardIDs, loadCards, rawCards]);
 
 	return useMemo(() => {
 		const cards = Object.values(rawCards).map((v) =>

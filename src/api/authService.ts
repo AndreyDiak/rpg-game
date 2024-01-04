@@ -8,7 +8,6 @@ import { supabase } from '../supabase/client';
 import { SignInData, SignUpData } from '../typings/auth';
 import { DBUser } from '../typings/user';
 
-// TODO при me() запросе, возвращаем полную дату...
 type SignUpRes = AuthResponse | PostgrestSingleResponse<DBUser> | null;
 
 class AuthService {

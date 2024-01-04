@@ -5,7 +5,7 @@ import backgroundImageUrl from '../../assets/images/main_background.jpg';
 export const AppLayout = () => {
 	return (
 		<div
-			className='w-full h-screen'
+			className='w-full h-screen overflow-hidden'
 			style={{
 				backgroundSize: 'cover',
 				background: `

@@ -26,13 +26,17 @@ export const Header = memo(() => {
 	const { signOut } = useAuth();
 
 	return (
-		<div>
-			{LINKS.map(({ title, to }) => (
-				<Link to={to} key={title}>
-					{title}
-				</Link>
-			))}
-			<button onClick={signOut}>Выйти</button>
+		<div className='absolute top-2 w-full flex justify-center'>
+			<div className='flex space-x-2'>
+				{LINKS.map(({ title, to }) => (
+					<Link to={to} key={title} className='header-item'>
+						{title}
+					</Link>
+				))}
+				<button onClick={signOut} className='header-item'>
+					Выйти
+				</button>
+			</div>
 		</div>
 	);
 });

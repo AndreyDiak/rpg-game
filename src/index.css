@@ -14,9 +14,16 @@
 	background-color: var(--color-bg-main);
 }
 
+@font-face {
+	font-family: 'Balsamiq';
+	src: local('Balsamiq'),
+		url('./fonts/BalsamiqSans-Regular.ttf') format('opentype');
+}
+
 body {
 	margin: 0;
 	padding: 0;
+	font-family: 'Balsamiq', sans-serif;
 }
 
 @media (prefers-color-scheme: light) {
@@ -46,6 +53,10 @@ body {
 
 .bg-transparent {
 	background: transparent !important;
+}
+
+.header-item {
+	@apply font-semibold text-white hover:text-gray-300;
 }
 
 .authButton {

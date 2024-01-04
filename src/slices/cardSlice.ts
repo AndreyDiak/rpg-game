@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { PCard } from '../typings/card';
 import { groupBy } from '../utils/functions/groupBy';
@@ -34,6 +34,12 @@ export const cardSlice = createSlice({
 });
 
 export const cardsSelector = (state: RootState) => state.card.cards;
+
+export const cardByIDSelector = createSelector(
+	(_: RootState, cardID: number) => cardID,
+	cardsSelector,
+	(cardID, cards) => cards[cardID] ?? null,
+);
 
 export const { setCards, setCard } = cardSlice.actions;
 
