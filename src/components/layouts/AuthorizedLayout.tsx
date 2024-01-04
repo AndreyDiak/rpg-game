@@ -4,7 +4,9 @@ import { supabase } from '../../supabase/client';
 import { AuthContextData } from '../../typings/auth';
 import { Header } from '../header/Header';
 
-export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+export const AuthContext = createContext<AuthContextData>(
+	{} as AuthContextData,
+);
 
 export const AuthorizedLayout = () => {
 	const navigate = useNavigate();
@@ -14,7 +16,7 @@ export const AuthorizedLayout = () => {
 			.getSession()
 			.then(({ data: { session } }) => {
 				if (!session) {
-					window.location.reload();
+					// window.location.reload();
 					navigate('/auth');
 				}
 			})

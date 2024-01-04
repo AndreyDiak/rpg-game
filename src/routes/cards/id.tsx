@@ -2,15 +2,12 @@ import { motion } from 'framer-motion';
 import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CharacterPresitige } from '../../components/card/character/CharacterPresitige';
-import { CharacterTypeIcon } from '../../components/card/character/CharacterTypeIcon';
+import { CharacterRarity } from '../../components/card/character/CharacterRarity';
+import { CharacterType } from '../../components/card/character/CharacterType';
 import { Button } from '../../components/common/button/Button';
 import { CloseLayout } from '../../components/layouts/CloseLayout';
 import { useCard } from '../../hooks/card/useCard';
 import { useMotionCallback } from '../../hooks/useMotionCallback';
-import {
-	characterRarityToTitleMap,
-	characterTypeToTitleMap,
-} from '../../typings/character.model';
 
 export const CardRoute = () => {
 	const { cardId } = useParams();
@@ -51,7 +48,7 @@ export const CardRoute = () => {
 		);
 	}
 
-	const { character, count, prestige, level } = card;
+	const { character, prestige, level } = card;
 
 	return (
 		<motion.div
@@ -74,19 +71,12 @@ export const CardRoute = () => {
 						<div className='flex items-start gap-4'>
 							<div>
 								<h4 className='font-semibold'>Тип персонажа</h4>
-								<div className='flex space-x-2 items-center'>
-									<span className='text-gray-700'>
-										{characterTypeToTitleMap[character.type]}
-									</span>
-									<CharacterTypeIcon type={character.type} />
-								</div>
+								<CharacterType type={character.type} />
 							</div>
 						</div>
 						<div>
 							<h4 className='font-semibold'>Редкость</h4>
-							<h6 className='text-gray-700'>
-								{characterRarityToTitleMap[character.rarity]}
-							</h6>
+							<CharacterRarity rarity={character.rarity} colored />
 						</div>
 					</div>
 				</div>
