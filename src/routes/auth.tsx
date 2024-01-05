@@ -4,7 +4,7 @@ import backgroundImageUrl from './../assets/images/main_background.jpg';
 export const AuthRoute = () => {
 	return (
 		<div
-			className="w-full h-screen flex items-center justify-center"
+			className='w-full h-screen flex items-center justify-center'
 			style={{
 				backgroundSize: 'cover',
 				background: `

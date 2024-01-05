@@ -12,7 +12,9 @@ export enum Theme {
 	LIGHT = 'light',
 }
 
-export const ThemeContext = createContext<ThemeContextProps>({} as ThemeContextProps);
+export const ThemeContext = createContext<ThemeContextProps>(
+	{} as ThemeContextProps,
+);
 
 const ThemeProvider = ({ children }: PropsWithChildren) => {
 	const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
@@ -22,7 +24,11 @@ const ThemeProvider = ({ children }: PropsWithChildren) => {
 		localStorage.setItem('theme', theme);
 	}, [theme]);
 
-	return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
+	return (
+		<ThemeContext.Provider value={{ theme, setTheme }}>
+			{children}
+		</ThemeContext.Provider>
+	);
 };
 
 export default ThemeProvider;

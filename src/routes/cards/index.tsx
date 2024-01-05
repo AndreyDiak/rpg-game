@@ -1,21 +1,24 @@
-import { useEffect } from 'react';
-import { supabase } from '../../supabase/client';
+import { Outlet } from 'react-router-dom';
+import { CharacterCard } from '../../components/card/character/Character';
+import { useCards } from '../../hooks/card/useCards';
 
 export const CardsRoute = () => {
-	// const onClickHandler = async () => {
-	// 	await supabase.from('users').insert({
-	// 		email: 'hello@example.com',
-	// 		name: 'John',
-	// 	});
-	// };
+	const { data: cards, loading } = useCards();
 
-	useEffect(() => {
-		const load = async () => {
-			const { data } = await supabase.from('characters').select();
-			console.log({ data });
-		};
-		load();
-	}, []);
+	if (loading) {
+		return <span>Загрузка...</span>;
+	}
 
-	return <div> </div>;
+	return (
+		<div className='flex w-full h-screen items-center'>
+			<div className='w-full flex justify-center flex-1'>
+				<div className='flex gap-4 max-w-4xl'>
+					{cards.map((card) => (
+						<CharacterCard key={card.id} card={card} />
+					))}
+				</div>
+			</div>
+			<Outlet />
+		</div>
+	);
 };

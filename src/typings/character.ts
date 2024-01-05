@@ -1,20 +1,38 @@
+import { Database } from '../supabase/types';
+
+export type Characteristics = {
+	damage: number;
+	hp: number;
+	armor: number;
+};
+
+export type DBSkill = {
+	type: SkillType;
+	category: SkillCategory;
+	count: number;
+	img_path: string;
+	about: string;
+};
+
+export type Skill = Omit<DBSkill, 'img_path'> & { imgPath: string };
+
+export type DBCharacter = Omit<
+	Database['public']['Tables']['characters']['Row'],
+	'characteristics' | 'skill'
+> & {
+	characteristics: Characteristics;
+	skill: DBSkill | null;
+};
+
 export interface Character {
+	id: number;
 	name: string;
 	type: CharacterType;
 	rarity: Rarity;
-	characteristics: {
-		damage: number;
-		hp: number;
-		armor: number;
-	};
-	skill?: {
-		type: SkillType;
-		category: SkillCategory;
-		count: number;
-		imgPath: string;
-		about: string;
-	};
-	imgPath: string;
+	characteristics: Characteristics;
+	skill: Skill | null;
+	imgPathWithBg: string;
+	imgPathWithoutBg: string;
 	about: string;
 }
 /**

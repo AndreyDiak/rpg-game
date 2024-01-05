@@ -1,11 +1,12 @@
-import { Session, User } from '@supabase/supabase-js';
-import { Fragment, createContext, useEffect, useState } from 'react';
+import { Fragment, createContext, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase/client';
 import { AuthContextData } from '../../typings/auth';
 import { Header } from '../header/Header';
 
-export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+export const AuthContext = createContext<AuthContextData>(
+	{} as AuthContextData,
+);
 
 export const AuthorizedLayout = () => {
 	const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const AuthorizedLayout = () => {
 			.getSession()
 			.then(({ data: { session } }) => {
 				if (!session) {
-					window.location.reload();
+					// window.location.reload();
 					navigate('/auth');
 				}
 			})
