@@ -101,7 +101,13 @@ export const CardRoute = () => {
 							</h6>
 						</div>
 					</div>
-					<Button className='authButton'>Улучшить</Button>
+					<Button
+						variant='outline'
+						size='lg'
+						color='var(--color-bg-gold-dark)'
+					>
+						Улучшить
+					</Button>
 				</div>
 				{/* character characteristics */}
 			</CloseLayout>
