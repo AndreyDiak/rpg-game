@@ -8,8 +8,9 @@
 	--color-bg-main: rgba(252, 252, 252);
 	--color-bg-gold: #a78656;
 	--color-bg-gold-lighten: #cfc1ac;
-	/* --color-bg-gold-lighten: #d7ccba; */
+	--color-bg-gold-light: #b3a183;
 	--color-bg-gold-darken: #7b6340;
+	--color-bg-gold-dark: #6d5737;
 
 	background-color: var(--color-bg-main);
 }
@@ -60,7 +61,7 @@ body {
 }
 
 .authButton {
-	@apply py-3 px-4 rounded-md font-semibold tracking-tighter w-[350px] lg:w-[390px] 2xl:w-[430px] focus:outline-none;
+	@apply py-3 px-4 rounded-md font-semibold w-[350px] lg:w-[390px] 2xl:w-[430px] focus:outline-none;
 }
 
 .authInput {
