@@ -25,13 +25,15 @@ export const AuthForm = () => {
 
 	return (
 		<div
-			className="flex text-black rounded-sm"
+			className='flex text-black rounded-sm'
 			style={{
 				backgroundColor: 'rgba(252, 252, 252, 0.85)',
 			}}
 		>
-			<div className="flex flex-col space-y-12 py-24 px-16">
-				<h2 className="text-2xl font-semibold text-black">{authModeToHeaderMap[mode]}</h2>
+			<div className='flex flex-col space-y-12 py-24 px-16'>
+				<h2 className='text-2xl font-semibold text-black'>
+					{authModeToHeaderMap[mode]}
+				</h2>
 				{
 					{
 						signIn: <SignInForm />,
@@ -39,12 +41,18 @@ export const AuthForm = () => {
 					}[mode]
 				}
 			</div>
-			<div className="py-24 px-16 flex bg-gold">
-				<div className="text-white flex flex-col items-center justify-center">
-					<h2 className="font-semibold text-2xl mb-6">{authModeToSuggestionMap[mode]}</h2>
+			<div className='py-24 px-16 flex bg-gold'>
+				<div className='text-white flex flex-col items-center justify-center'>
+					<h2 className='font-semibold text-2xl mb-6'>
+						{authModeToSuggestionMap[mode]}
+					</h2>
 					<Button
-						onClick={() => setMode(mode === 'signIn' ? 'signUp' : 'signIn')}
-						className="border-gray-100 border-2 authButton bg-gold-hover"
+						onClick={() =>
+							setMode(mode === 'signIn' ? 'signUp' : 'signIn')
+						}
+						className='border-gray-100 border-2 authButton bg-gold-hover'
+						variant='outline'
+						size='lg'
 					>
 						{authModeToChangeButtonMap[mode]}
 					</Button>
