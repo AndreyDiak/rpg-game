@@ -57,7 +57,7 @@ export const CardRoute = () => {
 	return (
 		<motion.div
 			{...styles}
-			className='h-screen p-4 w-4/12 relative'
+			className='h-screen p-4 w-[480px] relative'
 			style={{
 				backgroundColor: 'var(--color-bg-gold-lighten)',
 			}}
@@ -97,7 +97,7 @@ export const CardRoute = () => {
 				</div>
 
 				{/* level upgrade */}
-				<div className='flex w-full justify-start space-x-8'>
+				<div className='flex w-full items-center space-x-8'>
 					<div
 						className='flex justify-center items-center rounded-full w-20 h-20'
 						style={{
@@ -115,7 +115,7 @@ export const CardRoute = () => {
 						<div className='flex mt-2'>
 							<Button
 								variant='primary'
-								size='lg'
+								size='md'
 								style={{
 									borderRadius: 24,
 									paddingLeft: 32,
@@ -130,7 +130,7 @@ export const CardRoute = () => {
 
 				{/* character indicators */}
 				<div
-					className='flex flex-col rounded-md justify-center items-center p-6'
+					className='flex flex-col rounded-md justify-center items-center p-4'
 					style={{
 						backgroundColor: 'var(--color-bg-gold-light)',
 					}}
