@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { CharacterIndicator } from '../../components/card/character/CharacterIndicator';
 import { CharacterPresitige } from '../../components/card/character/CharacterPresitige';
 import { CharacterRarity } from '../../components/card/character/CharacterRarity';
 import { CharacterType } from '../../components/card/character/CharacterType';
@@ -8,6 +9,7 @@ import { Button } from '../../components/common/button/Button';
 import { CloseLayout } from '../../components/layouts/CloseLayout';
 import { useCard } from '../../hooks/card/useCard';
 import { useMotionCallback } from '../../hooks/useMotionCallback';
+import { Characteristics } from '../../typings/character';
 
 export const CardRoute = () => {
 	const { cardId } = useParams();
@@ -60,7 +62,7 @@ export const CardRoute = () => {
 		>
 			<CloseLayout
 				onClose={motionCallbackFn}
-				className='flex flex-col gap-4'
+				className='flex flex-col gap-4 h-full'
 			>
 				<div className='flex justify-between gap-3 items-center'>
 					{/* character avatar */}
@@ -91,25 +93,77 @@ export const CardRoute = () => {
 					<div className='text-gray-700'>{character.about}</div>
 				</div>
 
-				{/* level */}
-				<div>
-					<div className='flex justify-center items-center border border-gray-700 rounded-full w-32 h-32 mx-auto'>
-						<div className='flex flex-col items-center'>
-							<h4 className='font-semibold text-xl'>Уровень</h4>
-							<h6 className='font-bold text-orange-600 text-4xl'>
-								{level}
-							</h6>
-						</div>
+				{/* character indicators */}
+				<div
+					className='flex flex-col rounded-md justify-center items-center py-6 space-y-4'
+					style={{
+						backgroundColor: 'var(--color-bg-gold-light)',
+					}}
+				>
+					<h4 className='text-2xl text-gray-100'>Характеристики</h4>
+					<div className='flex gap-6 relative'>
+						<span
+							className='absolute h-0.5 w-full top-6 left-1/2 -translate-x-1/2 z-0'
+							style={{
+								backgroundColor: 'var(--color-bg-gold-darken)',
+							}}
+						/>
+						{(['hp', 'damage', 'armor'] as (keyof Characteristics)[]).map(
+							(v) => (
+								<div
+									className='flex flex-col items-center z-10'
+									key={v}
+								>
+									<div
+										className='flex justify-center items-center rounded-full w-12 h-12'
+										style={{
+											backgroundColor: 'var(--color-bg-gold)',
+											border:
+												'1px solid var(--color-bg-gold-darken)',
+										}}
+									>
+										<CharacterIndicator indicator={v} size={26} />
+									</div>
+									<h4 className='text-xl'>
+										{character.characteristics[v]}
+									</h4>
+								</div>
+							),
+						)}
 					</div>
-					<Button
-						variant='outline'
-						size='lg'
-						color='var(--color-bg-gold-dark)'
-					>
-						Улучшить
-					</Button>
 				</div>
-				{/* character characteristics */}
+
+				{/* skill */}
+				{character.skill && (
+					<div>
+						<h4 className='text-2xl text-gray-100'>Навык</h4>
+						<h6>{character.skill.about}</h6>
+						<div>{character.skill.category}</div>
+						<div>{character.skill.type}</div>
+						<div>{character.skill.count}</div>
+					</div>
+				)}
+
+				{/* level upgrade */}
+				<div className='flex flex-1 items-center justify-center'>
+					<div>
+						<div className='flex justify-center items-center border border-gray-700 rounded-full w-24 h-24 mx-auto'>
+							<div className='flex flex-col items-center'>
+								<h4 className='font-normal text-lg'>Уровень</h4>
+								<h6 className='font-bold text-orange-600 text-3xl'>
+									{level}
+								</h6>
+							</div>
+						</div>
+						<Button
+							variant='outline'
+							size='lg'
+							color='var(--color-bg-gold-dark)'
+						>
+							Улучшить
+						</Button>
+					</div>
+				</div>
 			</CloseLayout>
 		</motion.div>
 	);
