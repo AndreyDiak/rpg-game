@@ -26,7 +26,7 @@ const variantToHoverStyleMap: Style<ButtonVariant> = {
 		'background-color': 'var(--color-bg-gold-light)',
 	},
 	primary: {
-		'background-color': 'var(--color-bg-gold-darken)',
+		'background-color': 'var(--color-bg-gold-dark)',
 	},
 	outline: {
 		'background-color': 'var(--color-bg-gold-darken)',

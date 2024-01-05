@@ -6,20 +6,22 @@ export type Characteristics = {
 	armor: number;
 };
 
-export type Skill = {
+export type DBSkill = {
 	type: SkillType;
 	category: SkillCategory;
 	count: number;
-	imgPath: string;
+	img_path: string;
 	about: string;
 };
+
+export type Skill = Omit<DBSkill, 'img_path'> & { imgPath: string };
 
 export type DBCharacter = Omit<
 	Database['public']['Tables']['characters']['Row'],
 	'characteristics' | 'skill'
 > & {
 	characteristics: Characteristics;
-	skill: Skill | null;
+	skill: DBSkill | null;
 };
 
 export interface Character {

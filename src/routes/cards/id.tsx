@@ -1,12 +1,14 @@
 import { motion } from 'framer-motion';
-import { useCallback } from 'react';
+import { Fragment, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CharacterIndicator } from '../../components/card/character/CharacterIndicator';
 import { CharacterPresitige } from '../../components/card/character/CharacterPresitige';
-import { CharacterRarity } from '../../components/card/character/CharacterRarity';
 import { CharacterType } from '../../components/card/character/CharacterType';
 import { Button } from '../../components/common/button/Button';
 import { CloseLayout } from '../../components/layouts/CloseLayout';
+import { CharacterIndicator } from '../../components/pages/character/CharacterIndicator';
+import { CharacterRarity } from '../../components/pages/character/CharacterRarity';
+import { CharacterSkill } from '../../components/pages/character/CharacterSkill';
+import { CharacterUpgrade } from '../../components/pages/character/CharacterUpgrade';
 import { useCard } from '../../hooks/card/useCard';
 import { useMotionCallback } from '../../hooks/useMotionCallback';
 import { Characteristics } from '../../typings/character';
@@ -55,7 +57,7 @@ export const CardRoute = () => {
 	return (
 		<motion.div
 			{...styles}
-			className='h-screen p-4 w-3/12 relative'
+			className='h-screen p-4 w-4/12 relative'
 			style={{
 				backgroundColor: 'var(--color-bg-gold-lighten)',
 			}}
@@ -82,6 +84,7 @@ export const CardRoute = () => {
 						</div>
 					</div>
 				</div>
+
 				{/* character bio */}
 				<div>
 					<div className='font-semibold mb-3'>
@@ -93,23 +96,59 @@ export const CardRoute = () => {
 					<div className='text-gray-700'>{character.about}</div>
 				</div>
 
+				{/* level upgrade */}
+				<div className='flex w-full justify-start space-x-8'>
+					<div
+						className='flex justify-center items-center rounded-full w-20 h-20'
+						style={{
+							backgroundColor: 'var(--color-bg-gold)',
+							border: '1px solid var(--color-bg-gold-darken)',
+						}}
+					>
+						<div className='flex flex-col items-center justify-center text-white w-14 h-14'>
+							<h4 className='font-normal text-xs uppercase'>Уровень</h4>
+							<h6 className='font-bold text-3xl'>{level}</h6>
+						</div>
+					</div>
+					<div>
+						<CharacterUpgrade level={59} />
+						<div className='flex mt-2'>
+							<Button
+								variant='primary'
+								size='lg'
+								style={{
+									borderRadius: 24,
+									paddingLeft: 32,
+									paddingRight: 32,
+								}}
+							>
+								Улучшить
+							</Button>
+						</div>
+					</div>
+				</div>
+
 				{/* character indicators */}
 				<div
-					className='flex flex-col rounded-md justify-center items-center py-6 space-y-4'
+					className='flex flex-col rounded-md justify-center items-center p-6'
 					style={{
 						backgroundColor: 'var(--color-bg-gold-light)',
 					}}
 				>
-					<h4 className='text-2xl text-gray-100'>Характеристики</h4>
-					<div className='flex gap-6 relative'>
-						<span
-							className='absolute h-0.5 w-full top-6 left-1/2 -translate-x-1/2 z-0'
-							style={{
-								backgroundColor: 'var(--color-bg-gold-darken)',
-							}}
-						/>
-						{(['hp', 'damage', 'armor'] as (keyof Characteristics)[]).map(
-							(v) => (
+					<div>
+						<h4 className='text-2xl text-gray-100 mb-4'>
+							Характеристики
+						</h4>
+						<div className='flex gap-6 relative'>
+							<span
+								className='absolute h-0.5 w-full top-6 left-1/2 -translate-x-1/2 z-0'
+								style={{
+									backgroundColor: 'var(--color-bg-gold-darken)',
+								}}
+							/>
+							{(
+								['hp', 'damage', 'armor'] as (keyof Characteristics)[]
+							).map((v) => (
 								<div
 									className='flex flex-col items-center z-10'
 									key={v}
@@ -128,41 +167,27 @@ export const CardRoute = () => {
 										{character.characteristics[v]}
 									</h4>
 								</div>
-							),
-						)}
-					</div>
-				</div>
-
-				{/* skill */}
-				{character.skill && (
-					<div>
-						<h4 className='text-2xl text-gray-100'>Навык</h4>
-						<h6>{character.skill.about}</h6>
-						<div>{character.skill.category}</div>
-						<div>{character.skill.type}</div>
-						<div>{character.skill.count}</div>
-					</div>
-				)}
-
-				{/* level upgrade */}
-				<div className='flex flex-1 items-center justify-center'>
-					<div>
-						<div className='flex justify-center items-center border border-gray-700 rounded-full w-24 h-24 mx-auto'>
-							<div className='flex flex-col items-center'>
-								<h4 className='font-normal text-lg'>Уровень</h4>
-								<h6 className='font-bold text-orange-600 text-3xl'>
-									{level}
-								</h6>
-							</div>
+							))}
 						</div>
-						<Button
-							variant='outline'
-							size='lg'
-							color='var(--color-bg-gold-dark)'
-						>
-							Улучшить
-						</Button>
 					</div>
+
+					{/* skill */}
+					{character.skill && (
+						<Fragment>
+							{/* gold line between sections */}
+							<span
+								className='w-10/12 rounded-lg my-4'
+								style={{
+									backgroundColor: 'var(--color-bg-gold-darken)',
+									height: 1,
+								}}
+							/>
+							<CharacterSkill
+								skill={character.skill}
+								characterType={character.type}
+							/>
+						</Fragment>
+					)}
 				</div>
 			</CloseLayout>
 		</motion.div>

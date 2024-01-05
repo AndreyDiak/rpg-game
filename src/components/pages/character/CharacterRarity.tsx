@@ -1,6 +1,6 @@
 import { memo } from 'react';
+import { characterRarityToTitleMap } from '../../../models/character.model';
 import { Rarity } from '../../../typings/character';
-import { characterRarityToTitleMap } from '../../../typings/character.model';
 
 const rarityToColorMap: Record<Rarity, string> = {
 	common: '#374151',

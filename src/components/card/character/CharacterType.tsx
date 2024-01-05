@@ -1,6 +1,6 @@
 import { memo } from 'react';
+import { characterTypeToTitleMap } from '../../../models/character.model';
 import type { CharacterType as Type } from '../../../typings/character';
-import { characterTypeToTitleMap } from '../../../typings/character.model';
 import { CharacterTypeIcon } from './CharacterTypeIcon';
 
 export const CharacterType = memo(({ type }: { type: Type }) => {
