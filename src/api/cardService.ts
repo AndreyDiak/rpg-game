@@ -1,5 +1,7 @@
-import { supabase } from '../supabase/client';
-import { DBCard, PCard } from '../typings/card';
+import { Card, DBCard, PCard } from '../typings/card';
+import { Update } from '../typings/utils';
+import { CardPatcher } from '../utils/Patcher/CardPatcher';
+import { supabase } from './../supabase/client';
 import characterService from './characterService';
 import { Service } from './service';
 
@@ -9,7 +11,7 @@ class CardService<E extends PCard, D extends DBCard> extends Service<E> {
 			.from('cards')
 			.select()
 			.eq('id', id)
-			.maybeSingle<D>()
+			.single<D>()
 			.then(({ data }) => (data ? this.patch(data) : null));
 	}
 
@@ -20,6 +22,20 @@ class CardService<E extends PCard, D extends DBCard> extends Service<E> {
 			.in('id', ids)
 			.returns<D[]>()
 			.then(async ({ data }) => Promise.all<E>(data?.map(this.patch) ?? []));
+	}
+
+	async update(data: Update<Card>) {
+		const patchedData = CardPatcher.convertToApiFromUpdate(
+			data,
+		) as Partial<D>;
+
+		return supabase
+			.from('cards')
+			.update<Partial<D>>({ ...patchedData })
+			.eq('id', data.id)
+			.select('*')
+			.single<D>()
+			.then(({ data }) => (data ? this.patch(data) : null));
 	}
 
 	async patch(data: D): Promise<E> {

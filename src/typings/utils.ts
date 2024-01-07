@@ -8,3 +8,7 @@ export type PickSelected<
 	T extends object,
 	U extends readonly (keyof T)[] | undefined,
 > = U extends undefined ? T : U extends unknown[] ? Pick<T, U[number]> : T;
+
+type Entity = object & { id: number };
+
+export type Update<T extends Entity> = Pick<T, 'id'> & Partial<Omit<T, 'id'>>;

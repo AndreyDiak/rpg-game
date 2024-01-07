@@ -56,8 +56,8 @@ export function useCards() {
 		// TODO заменить на проверку того, сколько карточке отрендрено, и сколько их есть у игрока
 
 		if (
-			!isEmpty(rawCards) &&
-			Object.keys(rawCards).length === cardIDs.length
+			!isEmpty(rawCards)
+			// Object.keys(rawCards).length === cardIDs.length
 		) {
 			return;
 		}
