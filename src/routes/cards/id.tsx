@@ -111,7 +111,7 @@ export const CardRoute = () => {
 						</div>
 					</div>
 					<div>
-						<CharacterUpgrade level={59} />
+						<CharacterUpgrade level={level} />
 						<div className='flex mt-2'>
 							<Button
 								variant='primary'

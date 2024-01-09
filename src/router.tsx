@@ -6,6 +6,9 @@ import { AuthRoute } from './routes/auth';
 import { CardsRoute } from './routes/cards';
 import { CardRoute } from './routes/cards/id';
 import { GameRoute } from './routes/game';
+import { ManageRoute } from './routes/manage';
+import { FuseRoute } from './routes/manage/fuse';
+import { SummonRoute } from './routes/manage/summon';
 import { ShopRoute } from './routes/shop';
 
 export const router = createBrowserRouter([
@@ -28,6 +31,18 @@ export const router = createBrowserRouter([
 								element: <CardRoute />,
 							},
 						],
+					},
+					{
+						path: '/manage',
+						element: <ManageRoute />,
+					},
+					{
+						path: '/manage/fuse',
+						element: <FuseRoute />,
+					},
+					{
+						path: '/manage/summon',
+						element: <SummonRoute />,
 					},
 					{
 						path: '/shop',

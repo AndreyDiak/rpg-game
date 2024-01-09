@@ -13,6 +13,10 @@ const LINKS: Link[] = [
 		to: '/cards',
 	},
 	{
+		title: 'Управление',
+		to: '/manage',
+	},
+	{
 		title: 'Играть',
 		to: '/',
 	},
